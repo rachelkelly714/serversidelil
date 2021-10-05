@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const db = require("./db");
@@ -5,6 +6,7 @@ const db = require("./db");
 app.use(require("./middleware/headers"));
 const controllers = require("./controllers");
 app.use(express.json());
+
 
 const { User } = require("./models/user");
 
@@ -30,8 +32,8 @@ app.use("/xp", controllers.xpcontroller)
 db.authenticate()
   .then(() => db.sync({force: true})) // => {force: true}
   .then(() => {
-    app.listen(3000, () =>
-      console.log(`[Server: ] App is listening on Port ${3000}`)
+    app.listen(process.env.PORT, () =>
+      console.log(`[Server: ] App is listening on Port ${process.env.PORT}`)
     );
   })
   .catch((err) => {

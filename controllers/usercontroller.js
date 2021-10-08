@@ -4,7 +4,12 @@ const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-router.post('/create', (req, res) => {
+router.get('/test', (req, res) => {
+    res.send("Are you working?")
+})
+
+
+router.post('/register', (req, res) => {
 
     const userObj = {
         username: req.body.username,

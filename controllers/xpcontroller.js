@@ -94,7 +94,7 @@ router.put("/update/:id", validateJWT, async (req, res) => {
 
    const XpsUpdated = await Xp.update(Xp, query)
 
-   if (XpsUpdated) res.status(200).json({message: `Xp at id:${XpID} is updated`, updatedXp})
+   if (XpsUpdated) res.status(200).json({message: `Xp at id:${XpID} is added`, updatedXp})
 
    } catch (error) {
        res.status(500).json({

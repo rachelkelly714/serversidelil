@@ -24,7 +24,8 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5",
     "sync": "^0.2.5",
-    "kill-port": "^1.6.1"
+    "kill-port": "^1.6.1",
+    "proxy" : "http://localhost:5500/"
   }
 }
   

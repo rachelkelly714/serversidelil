@@ -15,7 +15,7 @@ const Gear = db.define('gear', {
    
   },
   acItemFour: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
  
   },
   acItemFive: {
@@ -23,7 +23,7 @@ const Gear = db.define('gear', {
  
   },
   shield: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.STRING,
     
   },
   

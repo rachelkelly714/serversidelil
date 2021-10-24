@@ -12,13 +12,13 @@ router.get('/test', (req, res) => {
 router.post('/register', (req, res) => {
 
     const userObj = {
-        username: req.body.username,
-        password: bcrypt.hashSync(req.body.password,12)
+        username: req.body.user.username,
+        password: bcrypt.hashSync(req.body.user.password,12)
     } 
 
     User.create(userObj)
     .then((created) => { 
-        const token = jwt.sign({id:created.id},'secret',{expiresIn:'30d'})
+        const token = jwt.sign({id:created.id}, process.env.JWT_SECRET ,{expiresIn:'30d'})
         res.status(200).json({
             User: created,
             Message: 'Player Created!',
@@ -35,21 +35,20 @@ router.post('/register', (req, res) => {
 router.post('/login', async (req, res) => {
     try{
 const found = await User.findOne({where: {
-    username: req.body.username
+    username: req.body.user.username
 }})
    if(!found){
        res.status(404).json("User not found.")
    } else {
-     let passwordCompare = await bcrypt.compare(req.body.password, found.password)  
+     let passwordCompare = await bcrypt.compare(req.body.user.password, found.password)  
 if (passwordCompare){
-      let token = jwt.sign({id: found.id}, 'secret', {expiresIn: '1d'}) 
+      let token = jwt.sign({id: found.id}, process.env.JWT_SECRET, {expiresIn: '1d'}) 
 
       res.status(200).json({
           User: found, 
           Message: 'Player logged in',
           SessionToken: token
-        
-        
+          
         })
     
     

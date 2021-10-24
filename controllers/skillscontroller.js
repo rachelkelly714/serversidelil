@@ -7,8 +7,10 @@ const validateJWT = require("../middleware/validate-jwt");
 
 router.post("/create", validateJWT, async(req, res) => {
     try{
-             let {acrobatics, 
-                appraise, 
+
+        let {
+            appraise,
+            acrobatics, 
                 bluff,
                 climb, 
                 craft, 
@@ -41,10 +43,10 @@ router.post("/create", validateJWT, async(req, res) => {
                 languages, 
                 
 
-            } = req.body.skill
+            } = req.body.skills
          await Skills.create({
-            acrobatics,
-            appraise, 
+             appraise, 
+             acrobatics,
             bluff,
             climb, 
             craft, 
@@ -97,8 +99,8 @@ router.get("/all",validateJWT, async (req, res) => {
      const SKillRet = Skills.map(a => {
          return {
              id: a.id,
-            acrobatics: a.acrobotics,
-            appraise: a.appraise, 
+             appraise: a.appraise, 
+             acrobatics: a.acrobatics,
             bluff: a.bluff,
             climb: a.climb, 
             craft: a.craft, 
@@ -174,8 +176,8 @@ router.put("/update/:id", validateJWT, async (req, res) => {
    try {
      const SkillID = req.params.id
      const {
-        acrobatics,
-        appraise, 
+         appraise, 
+         acrobatics,
         bluff,
         climb, 
         craft, 
@@ -215,8 +217,8 @@ router.put("/update/:id", validateJWT, async (req, res) => {
    }
 
    const updatedSkill = {
-    acrobatics,
-    appraise, 
+       appraise, 
+       acrobatics,
     bluff,
     climb, 
     craft, 

@@ -21,7 +21,7 @@ router.post("/create", validateJWT, async(req, res) => {
                 
 
             } = req.body.charinfo
-         await Charinfo.create({
+         let char = await Charinfo.create({
                  playerName,
                  characterName,
                  alignment,
@@ -38,7 +38,8 @@ router.post("/create", validateJWT, async(req, res) => {
          })
 
          res.status(200).json({
-             message: "Character Added"
+             message: "Character Added",
+             char
          })
 
         } catch(error){
@@ -50,7 +51,7 @@ router.post("/create", validateJWT, async(req, res) => {
         })
 
 
-router.get("/all",validateJWT, async (req, res) => {
+router.get("/all", validateJWT, async (req, res) => {
    try{
      const Charinfos =  await Charinfo.findAll()
      const CharinfosRet = Charinfos.map(a => {
@@ -92,7 +93,7 @@ router.delete("/delete/:id", validateJWT, async (req, res) => {
     }
     let itemsRemoved = await Charinfo.destroy(query)
 
-    if (itemsRemoved){
+    if (itemsRemoved){ 
         res.status(200).json({
             message: 'Info Removed'
         })

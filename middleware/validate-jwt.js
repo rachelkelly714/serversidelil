@@ -1,3 +1,4 @@
+require('dotenv')
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
@@ -22,7 +23,7 @@ const validateJWT = async (req, res, next) => {
     console.log("payload -->", payload);
 
     if (payload) {
-      let foundUser = await User.findOne({
+      const foundUser = await User.findOne({
         where: {
           id: payload.id,
         },

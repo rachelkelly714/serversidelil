@@ -10,7 +10,7 @@ router.post("/create", validateJWT, async(req, res) => {
                  acItemTwo,
                  acItemThree,
                  acItemFour,
-                 asItemFive,
+                 acItemFive,
                  shield 
                 
 
@@ -20,7 +20,7 @@ router.post("/create", validateJWT, async(req, res) => {
             acItemTwo,
             acItemThree,
             acItemFour,
-            asItemFive,
+            acItemFive,
             shield, 
             userId: req.user.id
          })
@@ -37,6 +37,24 @@ router.post("/create", validateJWT, async(req, res) => {
         
         })
 
+router.get('/mine', validateJWT, async (req,res) => {
+    try {
+        Gear.findAll({
+            where: { 
+                userId: req.user.id
+            }
+
+        })
+        .then((gea) => {
+            res.status(200).json(gea)
+        })
+    }catch (error) {
+        res.status(500).json({
+            message: 'gear not found'
+        })
+    }
+})
+
 
 router.get("/all",validateJWT, async (req, res) => {
    try{
@@ -48,7 +66,7 @@ router.get("/all",validateJWT, async (req, res) => {
             acItemTwo: a.acItemTwo,
             acItemThree: a.acItemThree,
             acItemFour: a.acItemFour,
-            asItemFive: a.acItemFive,
+            acItemFive: a.acItemFive,
             shield: a.shield, 
          }
      })
@@ -65,62 +83,63 @@ router.get("/all",validateJWT, async (req, res) => {
 
 })
 
-router.delete("/delete/:id", validateJWT, async (req, res) => {
-    try{ 
+router.delete("/:id", validateJWT, async (req, res) => {
     const GearID = req.params.id
     const userId = req.user.id
+    console.log(GearID, userId)
+    try{ 
     const query = {
         where: {id: GearID, userId}
-    }
+    };
     let itemsRemoved = await Gear.destroy(query)
 
     if (itemsRemoved){
         res.status(200).json({
-            message: 'Info Removed'
+            message: 'Gear Removed'
         })
     } else {
         res.status(404).json({
             message: "Info not found"
-        })
+        }); console.log(error)
     } 
      } catch (error) {
         res.status(500).json({
     message: `Error: {$error}`
-})    
+});    
     }
 
-})
+});
 
 router.put("/update/:id", validateJWT, async (req, res) => {
    try {
-     const GearID = req.params.id
-     const {
+     let GearID = req.params.id;
+     let {
         acItem,
         acItemTwo,
         acItemThree,
         acItemFour,
-        asItemFive,
+        acItemFive,
         shield
-     } = req.body.gear
+     } = req.body.gear;
 
-   const query = {
+   let query = {
        where: { 
            id: GearID
        }
    }
 
-   const updatedGear = {
+   let updatedGear = {
     acItem,
     acItemTwo,
     acItemThree,
     acItemFour,
-    asItemFive,
-    shield
-   }
+    acItemFive,
+    shield,
+   } = req.body.gear
 
-   const GearsUpdated = await Gear.update(Gear, query)
+   let GearsUpdated = await Gear.update(updatedGear, query);
 
-   if (GearsUpdated) res.status(200).json({message: `Gear at id:${GearID} is updated`, updatedGear})
+   if (GearsUpdated) res.status(200).json({message: `Gear at id:${GearID} is updated`, GearsUpdated})
 
    } catch (error) {
        res.status(500).json({

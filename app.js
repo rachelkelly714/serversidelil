@@ -1,18 +1,21 @@
 require('dotenv').config()
 const express = require("express");
-
+const cors = require('cors')
 const app = express();
 const db = require("./db");
-const cors = require('cors')
-app.use(cors())
 
-app.use(express.json());
 
 app.use(require("./middleware/headers"));
+app.use(express.json());
+
+
 const controllers = require("./controllers");
 
 
 app.use("/user", controllers.usercontroller);
+
+app.use(cors())
+
 app.use("/skills", controllers.skillscontroller);
 app.use("/equipment", controllers.equipmentcontroller);
 app.use("/charinfo", controllers.charinfocontroller);
@@ -27,10 +30,10 @@ app.use("/xp", controllers.xpcontroller)
 
 
 db.authenticate()
-  .then(() => db.sync()) // => {force: true}
+  .then(() => db.sync()) // => {force: true} to drop tables
   .then(() => {
     app.listen(5500, () =>
-      console.log(`[Server: ] App is listening on Port ${5500}`)
+      console.log(`[Server:] App is listening on Port ${5500}`)
     );
   })
   .catch((err) => {

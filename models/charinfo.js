@@ -2,12 +2,17 @@ const {DataTypes} = require('sequelize');
 const db = require('../db');
 
 const Charinfo = db.define('charinfo', {
+  characterName: {
+    type: DataTypes.STRING,
+
+  },
+
+userId: {
+  type: DataTypes.INTEGER,
+},
   playerName: {
     type: DataTypes.STRING,
     
-  },
-  characterName: {
-    type: DataTypes.STRING,
    
   },
   alignment: {
@@ -50,7 +55,6 @@ const Charinfo = db.define('charinfo', {
     type: DataTypes.STRING,
    
   }
-   
 
 });
 

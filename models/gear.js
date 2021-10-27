@@ -6,6 +6,11 @@ const Gear = db.define('gear', {
     type: DataTypes.STRING,
   
   },
+
+  userId: {
+    type: DataTypes.INTEGER,
+  },
+  
   acItemTwo: {
     type: DataTypes.STRING,
    
